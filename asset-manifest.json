@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/bcp-to-t3-client/static/css/main.073c9b0a.css",
+    "main.js": "/bcp-to-t3-client/static/js/main.53fdb55c.js",
+    "static/js/787.11f33b54.chunk.js": "/bcp-to-t3-client/static/js/787.11f33b54.chunk.js",
+    "index.html": "/bcp-to-t3-client/index.html",
+    "main.073c9b0a.css.map": "/bcp-to-t3-client/static/css/main.073c9b0a.css.map",
+    "main.53fdb55c.js.map": "/bcp-to-t3-client/static/js/main.53fdb55c.js.map",
+    "787.11f33b54.chunk.js.map": "/bcp-to-t3-client/static/js/787.11f33b54.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.53fdb55c.js"
+  ]
+}
