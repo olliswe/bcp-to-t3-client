@@ -1,23 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import axios from "axios";
+import CsvDownload from "react-json-to-csv";
+
+const API_URL = "http://localhost:3000";
 
 function App() {
+  const [eventUrl, setEventUrl] = useState("");
+  const [eventData, setEventData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setEventData(null);
+    setError("");
+    try {
+      const res = await axios.get(`${API_URL}/event?link=${eventUrl}`);
+      if (res?.data?.success) {
+        setEventUrl("");
+        setEventData(res.data.names);
+        setLoading(false);
+        return;
+      }
+      setError("Unable to get event data");
+      setLoading(false);
+    } catch (error) {
+      setError(error.toString());
+      setLoading(false);
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex", flexDirection: "column", margin: "20px" }}>
+      <h1>BCP TO T3</h1>
+      <div>
+        <input
+          value={eventUrl}
+          onChange={(event) => setEventUrl(event.target.value)}
+          placeholder={"Enter BCP URL"}
+          style={{ width: "500px" }}
+        />
+        <button onClick={handleSubmit} disabled={loading}>
+          {loading ? "Loading..." : "Submit"}
+        </button>
+      </div>
+      {error && (
+        <div>
+          <span style={{ color: "red" }}>{error}</span>
+        </div>
+      )}
+      {eventData && (
+        <div style={{ marginTop: "20px" }}>
+          <span>Success! </span>
+          <CsvDownload data={eventData} />
+        </div>
+      )}
     </div>
   );
 }
