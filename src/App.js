@@ -37,8 +37,10 @@ function App() {
         <input
           value={eventUrl}
           onChange={(event) => setEventUrl(event.target.value)}
-          placeholder={"Enter BCP URL"}
-          style={{ width: "500px" }}
+          placeholder={
+            "Enter BCP URL (e.g. https://web.bestcoastpairings.com/event-placings.php?eventId=HXHZ2dTv8m)"
+          }
+          style={{ width: "800px" }}
         />
         <button onClick={handleSubmit} disabled={loading}>
           {loading ? "Loading..." : "Submit"}
