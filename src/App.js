@@ -32,7 +32,7 @@ function App() {
   };
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "20px" }}>
-      <h1>BCP TO T3</h1>
+      <h1>BCP TO GERMAN RANKINGS EXPORT TOOL</h1>
       <div>
         <input
           value={eventId}
