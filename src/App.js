@@ -6,7 +6,7 @@ import CsvDownload from "react-json-to-csv";
 const API_URL = "https://bcp-to-t3-api.onrender.com";
 
 function App() {
-  const [eventUrl, setEventUrl] = useState("");
+  const [eventId, setEventId] = useState("");
   const [eventData, setEventData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -16,10 +16,10 @@ function App() {
     setEventData(null);
     setError("");
     try {
-      const res = await axios.get(`${API_URL}/event?link=${eventUrl}`);
+      const res = await axios.get(`${API_URL}/v2/bcp-event?eventId=${eventId}`);
       if (res?.data?.success) {
-        setEventUrl("");
-        setEventData(res.data.names);
+        setEventId("");
+        setEventData(res.data.data);
         setLoading(false);
         return;
       }
@@ -35,11 +35,9 @@ function App() {
       <h1>BCP TO T3</h1>
       <div>
         <input
-          value={eventUrl}
-          onChange={(event) => setEventUrl(event.target.value)}
-          placeholder={
-            "Enter BCP URL (e.g. https://web.bestcoastpairings.com/event-placings.php?eventId=HXHZ2dTv8m)"
-          }
+          value={eventId}
+          onChange={(event) => setEventId(event.target.value)}
+          placeholder={"Enter BCP event ID (e.g. zYnDUrjild)"}
           style={{ width: "800px" }}
         />
         <button onClick={handleSubmit} disabled={loading}>
