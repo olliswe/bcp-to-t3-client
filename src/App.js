@@ -52,7 +52,10 @@ function App() {
       {eventData && (
         <div style={{ marginTop: "20px" }}>
           <span>Success! </span>
-          <CsvDownload data={eventData} />
+          <CsvDownload
+            data={eventData}
+            filename={`${eventData[0]?.tournament_name || "unknown"}.csv`}
+          />
         </div>
       )}
     </div>
