@@ -6,7 +6,7 @@ import CsvDownload from "react-json-to-csv";
 const API_URL = "https://bcp-to-t3-api.onrender.com";
 
 function App() {
-  const [eventId, setEventId] = useState("");
+  const [eventIds, setEventIds] = useState("");
   const [eventData, setEventData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -15,28 +15,38 @@ function App() {
     setLoading(true);
     setEventData(null);
     setError("");
-    try {
-      const res = await axios.get(`${API_URL}/v2/bcp-event?eventId=${eventId}`);
-      if (res?.data?.success) {
-        setEventId("");
-        setEventData(res.data.data);
+
+    const eventIdArr = eventIds.replaceAll(' ', '').split(',')
+    const combinedEventData = []
+    eventIdArr.forEach(async(id, index) => {
+      const isLast = index === eventIdArr.length - 1
+      try {
+        const res = await axios.get(`${API_URL}/v2/bcp-event?eventId=${id}`);
+        if (res?.data?.success) {
+          combinedEventData.push(...res.data.data)
+          if (isLast) {
+            setEventIds("")
+            setLoading(false);
+          }
+          return
+        }
+        setError("Unable to get event data");
         setLoading(false);
-        return;
+      } catch (error) {
+        setError(error.toString());
+        setLoading(false);
       }
-      setError("Unable to get event data");
-      setLoading(false);
-    } catch (error) {
-      setError(error.toString());
-      setLoading(false);
-    }
+    })
+
+    setEventData(combinedEventData)
   };
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "20px" }}>
       <h1>BCP TO GERMAN RANKINGS EXPORT TOOL</h1>
       <div>
         <input
-          value={eventId}
-          onChange={(event) => setEventId(event.target.value)}
+          value={eventIds}
+          onChange={(event) => setEventIds(event.target.value)}
           placeholder={"Enter BCP event ID (e.g. zYnDUrjild)"}
           style={{ width: "800px" }}
         />
