@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import CsvDownload from "react-json-to-csv";
 
-const API_URL = "https://bcp-to-t3-api.onrender.com";
+const API_URL = "https://bcp-to-t3-api.vercel.app";
 
 const App = () => {
   const [eventIds, setEventIds] = useState("");
